@@ -21,7 +21,7 @@
 #### Oracle is just simply a human annotator like labelling unlabeled data by someone. Some challenges are human still labelling data by wrong, very costy, and time is also costy. Cross checking techniques helps to reduce human error (bias) and algos like Active learning helps to reduce both money cost and time cost.
 
 ### 6.	Describe some applications of Active Learning in real life.
-#### I was faced exact same situation that Active learning helps. My former team was trying to create a classification model using some text data that's collected from web sites. What we need to do was to know what sort of service they (web sites) offer. I don't remember all of the classes but some are IT, economy, advertise, marketing and so on. We need to create a model to predict what services the web site offer based on content that's on the web page.
+#### I was faced exact same situation that Active learning helps at 2018. My former team was trying to create a classification model using some text data that's collected from web sites. What we need to do was to know what sort of service they (web sites) offer. I don't remember all of the classes but some are IT, economy, advertise, marketing and so on. We need to create a model to predict what services the web site offer based on content that's on the web page.
 
 ## Section B: Handwritten Digits Recognition with Active Learning
 ### 1.	Provide Detailed Comments:
@@ -71,28 +71,35 @@ indices = np.arange(len(digits.data))
 rng.shuffle(indices)
 
 # Comments to be provided
+# selecting first 330 rows of data for train by using indices from original data
 X = digits.data[indices[:330]]
+# selecting target/answers/labels for selected training data
 y = digits.target[indices[:330]]
 images = digits.images[indices[:330]]
 
 # Comments to be provided
+# gets total number of samples that selected for training
 n_total_samples = len(y)
 n_labeled_points = 10
 max_iterations = 5
 
 # Comments to be provided
+# getting indices of unlabeled indices for active learning
 unlabeled_indices = np.arange(n_total_samples)[n_labeled_points:]
 f = plt.figure()
 # Comments to be provided
+# iterating number of iteration which provided above. Which is a hyperparam for training process.
 for i in range(max_iterations):
     if len(unlabeled_indices) == 0:
         print("No unlabeled items left to label.")
         break
     y_train = np.copy(y)
     # Comments to be provided
+    # unlabeling original data using unlabeled_indices var, because original data is completely labeled. 
     y_train[unlabeled_indices] = -1
 
     # Comments to be provided
+    # LabelSpreading is a library which helps to labeling data by training given dataset.
     lp_model = LabelSpreading(gamma=0.25, max_iter=20)
     lp_model.fit(X, y_train)
 
