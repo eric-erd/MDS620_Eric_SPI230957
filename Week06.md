@@ -104,6 +104,7 @@ for i in range(max_iterations):
     lp_model.fit(X, y_train)
 
     # Comments to be provided
+    # getting predicted labels using the trained model then we can compare predicted labels with original labels which given data is provided.
     predicted_labels = lp_model.transduction_[unlabeled_indices]
     true_labels = y[unlabeled_indices]
 
@@ -121,9 +122,11 @@ for i in range(max_iterations):
     print(cm)
 
     # Comments to be provided
+    # getting entropies which is a measurment of uncertainty by using builtin library.
     pred_entropies = stats.distributions.entropy(lp_model.label_distributions_.T)
 
     # Comments to be provided
+    # getting most uncertain values to give them to Oracle to labeling it manualy.
     uncertainty_index = np.argsort(pred_entropies)[::-1]
     uncertainty_index = uncertainty_index[
         np.isin(uncertainty_index, unlabeled_indices)
